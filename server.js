@@ -5,6 +5,10 @@ var path = require('path');
 var app = express();
 app.use(morgan('combined'));
 
+app.get('/ui/test.html', function (req, res) {
+  res.sendFile(path.join(__dirname, 'ui', 'test.html'));
+});
+
 var articles = {
     'article-one':{
         title: 'Chandu Srinivas | Article One',
@@ -78,10 +82,6 @@ app.get('/', function (req, res) {
 app.get('/:articleName', function (req, res){
     var articleName = req.params.articleName;
     res.send(createTemplate(articles[articleName]));
-});
-
-app.get('/ui/test.html', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui', 'test.html'));
 });
 
 app.get('/ui/style.css', function (req, res) {
