@@ -5,10 +5,6 @@ var path = require('path');
 var app = express();
 app.use(morgan('combined'));
 
-app.get('/ui/test.html', function (req, res) {
-  res.sendFile(path.join(__dirname, 'ui', 'test.html'));
-});
-
 var articles = {
     'article-one':{
         title: 'Chandu Srinivas | Article One',
