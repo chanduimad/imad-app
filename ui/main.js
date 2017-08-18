@@ -34,4 +34,4 @@ button.onclick = function (){
     //make the request
     request.open('GET', 'http://chandusrinivas.imad.hasura-app.io/counter', true);
     request.send(null);
-}
+};
