@@ -68,7 +68,7 @@ function createTemplate (data) {
     		        ${heading}
     	        </h3>
     	        <div>
-    		        ${date}
+    		        ${date.toDateString()}
     	        </div>
     	        <div>
     		        ${content}
@@ -102,6 +102,12 @@ app.get ('/counter', function (req, res){
 });
 
 app.get('/:articleName', function (req, res){
+    var articleName = req.params.articleName;
+    res.send(createTemplate(articles[articleName]));
+});
+
+//db implementation
+app.get('/articles/:articleName', function (req, res){
     var articleName = req.params.articleName;
     res.send(createTemplate(articles[articleName]));
 });
