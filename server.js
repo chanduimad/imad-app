@@ -83,7 +83,7 @@ function createTemplate (data) {
 app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
-
+//test db
 var pool = new Pool(config);
 app.get('/test-db', function (req, res) {
     pool.query('SELECT * FROM test', function (err, result){
@@ -100,7 +100,7 @@ app.get ('/counter', function (req, res){
     counter = counter + 1;
     res.send(counter.toString());
 });
-
+//without db implementation
 app.get('/:articleName', function (req, res){
     var articleName = req.params.articleName;
     res.send(createTemplate(articles[articleName]));
@@ -108,8 +108,18 @@ app.get('/:articleName', function (req, res){
 
 //db implementation
 app.get('/articles/:articleName', function (req, res){
-    var articleName = req.params.articleName;
-    res.send(createTemplate(articles[articleName]));
+    pool.query("SELECT * FROM article WHERE title = '" + req.params.articleName + "'", function (err, result){
+        if(err){
+            res.status(500).send(err.toString());
+        } else {
+            if (result.rows.length === 0){
+                res.status(404).send('Article not found');
+            } else{
+                var articleData = result.rows[0];
+                res.send(createTemplate(articleData));
+            }
+        }
+    });
 });
 
 app.get('/ui/style.css', function (req, res) {
